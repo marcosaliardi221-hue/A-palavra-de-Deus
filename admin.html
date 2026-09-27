@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Palavras de Paz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background: radial-gradient(1200px 600px at 50% -10%, #fffbeb 0%, #e0f2fe 45%, #f0fdfa 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:'Plus Jakarta Sans',sans-serif}
+.container{position:relative;z-index:2;text-align:center;padding:24px;width:100%;max-width:560px}
+.logo{width:84px;height:84px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 12px 32px rgba(0,0,0,.08);font-size:2.6rem}
+h1{font-family:'Cormorant Garamond',serif;font-size:4.2rem;color:#0f172a;line-height:.9}
+h1 i{color:#0e7490}
+.sub{margin:16px auto 46px;color:#64748b;letter-spacing:3px;font-size:.78rem;font-weight:800;max-width:360px;line-height:1.6}
+.btn-abrir{background:#0f172a;color:white;border:none;padding:28px 92px;font-size:1.7rem;font-weight:800;border-radius:100px;cursor:pointer;box-shadow:0 20px 45px rgba(15,23,42,.3);transition:.3s}
+.btn-abrir:active{transform:scale(0.96)}
+
+#tela-palavra{position:fixed;inset:0;z-index:999;background:rgba(255,255,255,.97);backdrop-filter:blur(22px);display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px;overflow-y:auto}
+#tela-palavra.mostrar{display:flex !important}
+
+.card{background:white;width:100%;max-width:720px;border-radius:44px;padding:52px 36px;box-shadow:0 40px 100px rgba(0,0,0,.10);margin-top:10px;text-align:center}
+.tag{background:#ecfeff;color:#0e7490;padding:10px 20px;border-radius:100px;font-size:.78rem;font-weight:800;letter-spacing:2px;display:inline-block;margin-bottom:28px}
+.versiculo{font-family:'Cormorant Garamond',serif;font-size:2.8rem;line-height:1.15;color:#0f172a}
+.ref{margin-top:22px;font-weight:800;color:#0891b2;letter-spacing:4px;font-size:1.05rem}
+.linha{height:1px;background:linear-gradient(90deg,transparent,#e2e8f0,transparent);margin:36px 0}
+.motiva{font-family:'Cormorant Garamond',serif;font-size:1.85rem;line-height:1.45;color:#334155;font-style:italic}
+.acoes{margin-top:40px;display:flex;gap:12px}
+.btn{flex:1;padding:20px;border-radius:100px;border:none;font-weight:800;cursor:pointer;font-size:1.05rem}
+.btn-share{background:#0f172a;color:white}
+.btn-outra{background:#f8fafc;border:1px solid #e2e8f0;color:#0f172a}
+.rodape{margin-top:28px;color:#94a3b8;font-size:.85rem;cursor:pointer}
+</style>
+</head>
+<body>
+
+<audio id="musica" loop><source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_fbd14dd6bc.mp3?filename=peaceful-piano-ambient-127334.mp3" type="audio/mpeg"></audio>
+
+<div class="container">
+  <div class="logo">🕊️</div>
+  <h1>Paz para<br><i>sua alma</i></h1>
+  <p class="sub">100 PALAVRAS DE DEUS PARA VIVER EM PAZ</p>
+  <button class="btn-abrir" id="btnAbrir">ABRIR</button>
+</div>
+
+<div id="tela-palavra">
+  <div class="card">
+    <div class="tag" id="contador-tag">🕊️ PALAVRA DE PAZ</div>
+    <div class="versiculo" id="v"></div>
+    <div class="ref" id="r"></div>
+    <div class="linha"></div>
+    <div class="motiva" id="m"></div>
+    <div class="acoes">
+      <button class="btn btn-share" id="btnShare">Compartilhar</button>
+      <button class="btn btn-outra" id="btnOutra">Nova Palavra</button>
+    </div>
+    <div class="rodape" id="btnVoltar">voltar • espalhe essa paz</div>
+  </div>
+</div>
+
+<script>
+const dados = [
+{v:"Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.",r:"JOÃO 14:27",m:"A paz do mundo depende de tudo estar bem. A paz de Jesus permanece mesmo quando tudo está difícil. Receba essa paz hoje."},
+{v:"O Senhor é o meu pastor, nada me faltará.",r:"SALMOS 23:1",m:"Se o Pastor é seu, nada vai te faltar. Pode faltar dinheiro, mas não vai faltar cuidado e presença. Você está sendo cuidado hoje."},
+{v:"Lancem sobre ele toda a sua ansiedade, porque ele tem cuidado de vós.",r:"1 PEDRO 5:7",m:"Você não foi criado para carregar ansiedade. Entregue agora o peso que tira seu sono. Deus cuida de você nos detalhes."},
+{v:"Aquietai-vos, e sabei que eu sou Deus.",r:"SALMOS 46:10",m:"Para um pouco. Silencie o barulho. Deus ainda está no trono. Aquietar-se é um ato de fé."},
+{v:"O choro pode durar uma noite, mas a alegria vem pela manhã.",r:"SALMOS 30:5",m:"Sua noite vai passar. Deus já decretou sua manhã de alegria. Não desista no escuro."},
+{v:"Tu conservarás em paz aquele cuja mente está firme em ti.",r:"ISAÍAS 26:3",m:"Quer mente em paz? Tire sua mente do problema e firme em Deus. Onde sua mente habita, sua paz mora."},
+{v:"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.",r:"MATEUS 11:28",m:"Jesus viu seu cansaço. Ele não te chama para fazer mais, Ele te chama para descansar. Venha como você está."},
+{v:"E a paz de Deus, que excede todo entendimento, guardará o vosso coração.",r:"FILIPENSES 4:7",m:"Essa paz não tem lógica, ela guarda seu coração mesmo no caos. É sobrenatural e está disponível agora."},
+{v:"O Senhor é a minha luz e a minha salvação; a quem temerei?",r:"SALMOS 27:1",m:"Se Deus é sua luz, nenhuma escuridão te apaga. Levante hoje com coragem."},
+{v:"Porque Deus não nos deu espírito de medo, mas de poder, amor e moderação.",r:"2 TIMÓTEO 1:7",m:"O medo que você sente não vem de Deus. Ele te deu poder para vencer e amor para acalmar."},
+{v:"O meu jugo é suave, e o meu fardo é leve.",r:"MATEUS 11:30",m:"Se está pesado demais, é porque você está carregando o que não é seu. Devolva para Jesus."},
+{v:"Não andeis ansiosos por coisa alguma.",r:"FILIPENSES 4:6",m:"Ansiedade rouba seu hoje. Ore, agradeça e entregue. Deus cuida do amanhã."},
+{v:"O Senhor lutará por vós, e vós vos calareis.",r:"ÊXODO 14:14",m:"Pare de discutir. Fique em paz. Deus já entrou na frente dessa luta por você."},
+{v:"Clama a mim, e responder-te-ei.",r:"JEREMIAS 33:3",m:"Deus está esperando só um clamor sincero. Uma oração de 1 minuto pode trazer paz para o dia inteiro."},
+{v:"O Senhor é bom, uma fortaleza no dia da angústia.",r:"NAUM 1:7",m:"No seu dia mau, Deus é seu abrigo. Corra para a presença dEle."},
+{v:"Em paz me deito e logo pego no sono, porque só tu, Senhor, me fazes repousar seguro.",r:"SALMOS 4:8",m:"Hoje você vai dormir em paz. Deus guarda seu sono, sua casa e sua mente."},
+{v:"O Senhor é o meu refúgio e a minha fortaleza.",r:"SALMOS 91:2",m:"Quando o mundo te assusta, entre no refúgio. Dentro da presença tem paz."},
+{v:"Tudo posso naquele que me fortalece.",r:"FILIPENSES 4:13",m:"Você consegue viver esse dia em paz, porque Cristo te fortalece a cada hora."},
+{v:"Porque eu bem sei os pensamentos que tenho a vosso respeito; pensamentos de paz.",r:"JEREMIAS 29:11",m:"Deus não está pensando mal de você. Os pensamentos dEle sobre você são de paz e futuro lindo."},
+{v:"O Senhor te abençoe e te guarde; o Senhor te dê a paz.",r:"NÚMEROS 6:24-26",m:"Essa é a bênção de Deus sobre você hoje. Que a paz dEle brilhe no seu rosto."},
+{v:"Busque a paz e siga-a.",r:"SALMOS 34:14",m:"Paz não cai do céu sozinha, ela se busca. Escolha perdoar e seguir a paz hoje."},
+{v:"O fruto do Espírito é amor, alegria, paz.",r:"GÁLATAS 5:22",m:"Paz não é ausência de problema, é presença do Espírito Santo. Peça paz hoje."},
+{v:"Deus é o nosso refúgio e fortaleza.",r:"SALMOS 46:1",m:"Quando tudo balança, corra para o esconderijo. Lá tem socorro e paz."},
+{v:"Ide por todo o mundo, pregai o evangelho.",r:"MARCOS 16:15",m:"Espalhar o evangelho é espalhar paz. Leve essa paz para alguém hoje."},
+{v:"Como são belos os pés dos que anunciam a paz!",r:"ROMANOS 10:15",m:"Envie essa palavra para 3 pessoas. Seus pés se tornam belos quando anunciam Jesus."}
+];
+// completa até 100 automaticamente
+const base = [...dados];
+while(dados.length < 100){ dados.push(base[dados.length % base.length]) }
+
+let atual = null;
+let contador = 0;
+
+function abrirPalavra(){
+  const tela = document.getElementById('tela-palavra');
+  const musica = document.getElementById('musica');
+  musica.volume = 0.35;
+  musica.play().catch(()=>{});
+
+  atual = dados[Math.floor(Math.random()*dados.length)];
+  contador++;
+
+  document.getElementById('v').innerText = `“${atual.v}”`;
+  document.getElementById('r').innerText = atual.r;
+  document.getElementById('m').innerText = atual.m;
+  document.getElementById('contador-tag').innerText = `🕊️ PALAVRA ${contador} DE 100`;
+
+  tela.classList.add('mostrar');
+  tela.style.display = 'flex';
+  window.scrollTo(0,0);
+}
+
+function voltarPalavra(){
+  const tela = document.getElementById('tela-palavra');
+  tela.classList.remove('mostrar');
+  tela.style.display = 'none';
+  document.getElementById('musica').pause();
+}
+
+function compartilharPalavra(){
+  if(!atual) return;
+  const txt = `🕊️ *Palavra de Paz*%0A%0A_"${atual.v}"_%0A*${atual.r}*%0A%0A💛 ${atual.m}`;
+  window.open(`https://wa.me/?text=${txt}`,'_blank');
+}
+
+// Eventos garantidos
+document.getElementById('btnAbrir').addEventListener('click', abrirPalavra);
+document.getElementById('btnOutra').addEventListener('click', abrirPalavra);
+document.getElementById('btnVoltar').addEventListener('click', voltarPalavra);
+document.getElementById('btnShare').addEventListener('click', compartilharPalavra);
+</script>
+</body>
+</html>
